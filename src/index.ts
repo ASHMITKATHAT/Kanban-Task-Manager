@@ -8,40 +8,37 @@ import { logger } from './config/logger';
 import errorHandler from './middlewares/errorHandler';
 import authRoutes from './routes/authRoutes';
 import boardRoutes from './routes/boardRoutes';
+import taskRoutes from './routes/taskRoutes';
+import notificationRoutes from './routes/notificationRoutes';
 
 dotenv.config();
 
 const app = express();
 
-// Security Middleware
 app.use(helmet());
 app.use(cors());
 
-// Rate Limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: 'Too many requests from this IP, please try again after 15 minutes',
 });
 app.use(limiter);
 
-// Body Parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database Connection
 connectDB();
 
-// API Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/boards', boardRoutes);
+app.use('/api/v1/tasks', taskRoutes);
+app.use('/api/v1/notifications', notificationRoutes);
 
-// Health Check Route
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP' });
 });
 
-// Error Handling Middleware
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
