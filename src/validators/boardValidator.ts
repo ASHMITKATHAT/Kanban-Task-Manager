@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-export const boardIdSchema = z.string().uuid(); // Assuming IDs are UUIDs, adjust if using ObjectId
-
 export const createBoardSchema = z.object({
   title: z.string().min(1).max(100),
   description: z.string().max(500).optional(),
@@ -10,8 +8,20 @@ export const createBoardSchema = z.object({
 export const updateBoardSchema = z.object({
   title: z.string().min(1).max(100).optional(),
   description: z.string().max(500).optional(),
-}).partial(); // Allow partial updates
+});
 
-export const getBoardSchema = z.object({
-  id: z.string(), // Use appropriate schema for ID, e.g., z.string().uuid() or z.string()
+export const createColumnSchema = z.object({
+  title: z.string().min(1).max(100),
+  order: z.number().int().min(0).optional(),
+  wipLimit: z.number().int().min(1).max(50).optional(),
+});
+
+export const updateColumnSchema = z.object({
+  title: z.string().min(1).max(100).optional(),
+  order: z.number().int().min(0).optional(),
+  wipLimit: z.number().int().min(1).max(50).optional().nullable(),
+});
+
+export const addMemberSchema = z.object({
+  userId: z.string(),
 });
