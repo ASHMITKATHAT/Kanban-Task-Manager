@@ -1,3 +1,1 @@
-export const helper = { id: '2026-02-05 12:11:24', version: '1.0.0' };
-
-// update 2026-02-11 10:11:17
+export const helper = { id: '2026-02-13 15:50:15', version: '1.0.0' };
