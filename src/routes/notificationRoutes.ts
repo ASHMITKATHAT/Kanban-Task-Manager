@@ -12,3 +12,5 @@ router.put('/mark-all-read', authenticateToken, authorizeRoles('Admin', 'User'),
 router.put('/:id/read', authenticateToken, authorizeRoles('Admin', 'User'), markAsRead);
 
 export default router;
+
+// update 2026-04-28 12:29:15
